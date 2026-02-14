@@ -1,0 +1,6 @@
+.johnny-cartoon-bg {
+  position: absolute;
+  height: 300px;
+  z-index: 0;
+  opacity: 0.8;
+}

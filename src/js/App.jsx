@@ -1,14 +1,16 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import PolaroidStack from './PolaroidStack'
 import NameEntry from './NameEntry'
+import YesButton from './YesButton'
+import NoButton from './NoButton'
+import JohnnyCartoonBg from './JohnnyCartoonBg'
 import '../css/App.css'
-import heartEyesImage from '../assets/johnny_cartoon/heart_eyes.png'
-import celebrationImage from '../assets/johnny_cartoon/celebration.png'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [hasAccepted, setHasAccepted] = useState(false)
-
+  const [showMad, setShowMad] = useState(false)
+  const madTimeoutRef = useRef(null)
   if (!isAuthenticated) {
     return (
       <div className="container">
@@ -18,17 +20,36 @@ function App() {
   }
 
   const handleYesClick = () => {
+    // Clear any existing mad timeout
+    if (madTimeoutRef.current) {
+      clearTimeout(madTimeoutRef.current)
+    }
+
     setHasAccepted(true)
+    setShowMad(false)
+  }
+
+  const handleMad = () => {
+    // Switch to mad image for 3 seconds
+    if (!showMad) {
+      setShowMad(true)
+
+      // Clear any existing timeout
+      if (madTimeoutRef.current) {
+        clearTimeout(madTimeoutRef.current)
+      }
+
+      // Reset after 3 seconds
+      madTimeoutRef.current = setTimeout(() => {
+        setShowMad(false)
+      }, 500)
+    }
   }
 
   return (
     <div className="container">
       <div className={`polaroid-wrapper ${hasAccepted ? 'celebration' : ''}`}>
-        <img
-          src={hasAccepted ? celebrationImage : heartEyesImage}
-          alt={hasAccepted ? "Celebration" : "Heart Eyes"}
-          className="johnny-cartoon-bg"
-        />
+        <JohnnyCartoonBg hasAccepted={hasAccepted} showMad={showMad} />
         <PolaroidStack hasAccepted={hasAccepted} />
       </div>
       <p className={`question ${hasAccepted ? 'celebration' : ''}`}>
@@ -36,8 +57,8 @@ function App() {
       </p>
       {!hasAccepted && (
         <div className="buttons">
-          <button className="yes-button" onClick={handleYesClick}>Yes</button>
-          <button className="no-button">No</button>
+          <YesButton onClick={handleYesClick} />
+          <NoButton onMad={handleMad} />
         </div>
       )}
     </div>
