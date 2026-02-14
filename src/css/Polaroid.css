@@ -1,0 +1,24 @@
+.polaroid {
+  background: white;
+  padding: 1rem;
+  padding-bottom: 3rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  cursor: grab;
+  transition: box-shadow 0.2s ease;
+}
+
+.polaroid:active {
+  cursor: grabbing;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.polaroid:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.photo {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+}
