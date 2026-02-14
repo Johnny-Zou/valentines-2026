@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
 import photo1 from '../assets/polaroid/1.jpg'
-import photo2 from '../assets/polaroid/2.JPG'
-import photo3 from '../assets/polaroid/3.JPG'
-import photo4 from '../assets/polaroid/4.JPG'
-import photo5 from '../assets/polaroid/5.JPG'
+import photo2 from '../assets/polaroid/2.jpg'
+import photo3 from '../assets/polaroid/3.jpg'
+import photo4 from '../assets/polaroid/4.jpg'
+import photo5 from '../assets/polaroid/5.jpg'
 import Polaroid from './Polaroid'
 import '../css/PolaroidStack.css'
 
