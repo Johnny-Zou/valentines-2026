@@ -1,0 +1,143 @@
+.name-entry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.name-entry-line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 4.5rem;
+}
+
+.name-entry-line form {
+  margin: 0;
+  padding: 0;
+  margin-left: 2px;
+}
+
+.name-entry-line form.form-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.name-entry-line form.form-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.name-entry-title {
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: #ff6b9d;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.typing-cursor {
+  margin-left: 2px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+.input-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.text-measure {
+  position: absolute;
+  visibility: hidden;
+  white-space: pre;
+  font-size: 2.5rem;
+  font-weight: 500;
+  font-family: inherit;
+  pointer-events: none;
+}
+
+.name-input {
+  padding: 0;
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 500;
+  border: none;
+  background: transparent;
+  color: #ff6b9d;
+  text-align: left;
+  outline: none;
+  font-family: inherit;
+  caret-color: transparent;
+  transition: width 0.1s ease;
+}
+
+.input-cursor {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2.5rem;
+  color: #ff6b9d;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+  pointer-events: none;
+}
+
+.error-section {
+  position: absolute;
+  top: calc(100% + 2rem);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.error-message {
+  color: #ff4d7d;
+  font-size: 1rem;
+  margin: 0;
+  white-space: nowrap;
+  animation: shake 0.5s;
+}
+
+.error-image {
+  width: 150px;
+  height: auto;
+  transition: opacity 0.3s ease;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+}

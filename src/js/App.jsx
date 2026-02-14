@@ -1,7 +1,19 @@
+import { useState } from 'react'
 import PolaroidStack from './PolaroidStack'
+import NameEntry from './NameEntry'
 import '../css/App.css'
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  if (!isAuthenticated) {
+    return (
+      <div className="container">
+        <NameEntry onNameSubmit={setIsAuthenticated} />
+      </div>
+    )
+  }
+
   return (
     <div className="container">
       <PolaroidStack />
