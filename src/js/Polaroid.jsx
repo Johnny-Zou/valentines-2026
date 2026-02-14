@@ -1,9 +1,9 @@
 import '../css/Polaroid.css'
 
-function Polaroid({ photo, position, onDragStart, zIndex, rotation }) {
+function Polaroid({ photo, position, onDragStart, zIndex, rotation, isDragging }) {
   return (
     <div
-      className="polaroid"
+      className={`polaroid ${isDragging ? 'dragging' : ''}`}
       style={{
         position: 'absolute',
         left: `${position.x}px`,

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import photo1 from '../assets/polaroid/1.jpg'
 import photo2 from '../assets/polaroid/2.JPG'
 import photo3 from '../assets/polaroid/3.JPG'
@@ -15,14 +15,22 @@ const photos = [
   { id: 5, src: photo5, alt: 'Photo 5' },
 ]
 
-function PolaroidStack() {
+function PolaroidStack({ hasAccepted }) {
   const stackRef = useRef(null)
 
-  // Generate initial positions dynamically
+  // Generate initial positions dynamically (centered in the 400px container)
   const [positions, setPositions] = useState(() => {
     const initialPositions = {}
+    // Polaroid dimensions: 300px image + 2rem (32px) horizontal padding = 332px wide
+    //                      300px image + 4rem (64px) vertical padding = 364px tall
+    // Center in 400px container: (400 - 332) / 2 = 34px, (400 - 364) / 2 = 18px
+    const centerX = 34
+    const centerY = 18
     photos.forEach((photo, index) => {
-      initialPositions[photo.id] = { x: index * 5, y: index * 5 }
+      initialPositions[photo.id] = {
+        x: centerX + index * 5,
+        y: centerY + index * 5
+      }
     })
     return initialPositions
   })
@@ -49,6 +57,43 @@ function PolaroidStack() {
   })
 
   const [maxZIndex, setMaxZIndex] = useState(photos.length)
+
+  // Scatter polaroids when accepted
+  useEffect(() => {
+    if (hasAccepted) {
+      const scatteredPositions = {}
+      const centerX = 200 // Center of the 400px container
+      const centerY = 200
+
+      photos.forEach((photo) => {
+        const currentPos = positions[photo.id]
+
+        // Check if polaroid is covering the center (where celebration.png is)
+        // A polaroid is ~320px wide, so if its center is within ~260px of the center, it's covering
+        const distanceFromCenter = Math.sqrt(
+          Math.pow(currentPos.x + 160 - centerX, 2) +
+          Math.pow(currentPos.y + 160 - centerY, 2)
+        )
+
+        // Only scatter if covering the celebration image
+        if (distanceFromCenter < 260) {
+          // Generate random offset - scatter 300-500px away
+          const direction = Math.random() > 0.5 ? 1 : -1
+          const xOffset = direction * (Math.random() * 200 + 300) // 300-500px
+          const yOffset = (Math.random() - 0.5) * 500 // -150 to 150px
+
+          scatteredPositions[photo.id] = {
+            x: currentPos.x + xOffset,
+            y: currentPos.y + yOffset
+          }
+        } else {
+          // Keep position if not covering
+          scatteredPositions[photo.id] = currentPos
+        }
+      })
+      setPositions(scatteredPositions)
+    }
+  }, [hasAccepted])
 
   const handleDragStart = (e, photoId) => {
     e.preventDefault()
@@ -105,6 +150,7 @@ function PolaroidStack() {
           onDragStart={handleDragStart}
           zIndex={zIndices[photo.id]}
           rotation={rotations[photo.id]}
+          isDragging={dragging === photo.id}
         />
       ))}
     </div>

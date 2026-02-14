@@ -4,6 +4,10 @@
   padding-bottom: 3rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
   cursor: grab;
+  transition: box-shadow 0.2s ease, left 0.6s ease-out, top 0.6s ease-out;
+}
+
+.polaroid.dragging {
   transition: box-shadow 0.2s ease;
 }
 
